@@ -1,0 +1,332 @@
+/* Reset completo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    background-color: #f8f8f8;
+    color: #000000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Imagem de fundo */
+.imagem-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.imagem-fundo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) brightness(0.9);
+    opacity: 0.4;
+}
+
+/* Overlay para melhorar legibilidade */
+.overlay-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 100%);
+    z-index: -1;
+    backdrop-filter: blur(2px);
+}
+
+/* Contêiner principal - Réplica exata da imagem */
+.container-exato {
+    width: 100%;
+    max-width: 1000px;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Coluna esquerda */
+.coluna-esquerda {
+    flex: 1;
+    text-align: right;
+    padding-top: 10px;
+}
+
+/* Coluna central com mais elementos */
+.coluna-central {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 320px;
+    padding: 0 20px;
+}
+
+/* Coluna direita */
+.coluna-direita {
+    flex: 1;
+    text-align: left;
+    padding-top: 40px;
+}
+
+/* Estilo de texto baseado na imagem */
+.texto-imagem {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.texto-imagem:last-child {
+    margin-bottom: 0;
+}
+
+.texto-negrito {
+    font-weight: 700;
+    font-size: 19px;
+    display: block;
+    margin-top: 4px;
+}
+
+/* Nomes estilizados */
+.nomes-casal {
+    font-family: 'Great Vibes', cursive;
+    font-size: 52px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.we-love {
+    font-family: 'Great Vibes', cursive;
+    font-size: 48px;
+    line-height: 1.1;
+    margin-top: 15px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* Contador de dias */
+.contador-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.data-caixa {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ffffff;
+    padding: 15px 30px;
+    font-size: 18px;
+    letter-spacing: 2.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+    border-radius: 8px;
+    min-width: 180px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.data-caixa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.contador-dias {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.contador-numero {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 2px;
+    transition: all 0.3s ease;
+}
+
+.contador-texto {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    opacity: 0.9;
+}
+
+.contador-tempo {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    opacity: 0.9;
+    font-family: monospace;
+}
+
+.contador-legenda {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Espaçamentos específicos da imagem */
+.espacamento-duplo {
+    margin-bottom: 40px;
+}
+
+/* Animações de texto */
+.texto-animado {
+    transition: all 0.3s ease;
+    display: inline-block;
+    cursor: default;
+}
+
+.texto-animado:hover {
+    transform: scale(1.08) translateY(-2px);
+    color: #ff0000 !important;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+.nomes-casal:hover {
+    color: #ff0000;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+}
+
+.we-love:hover {
+    color: #ff0000;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+}
+
+.texto-negrito:hover {
+    color: #ff0000;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}
+
+/* Efeito de brilho */
+.brilho-ativo {
+    animation: brilho 1.5s ease-in-out;
+}
+
+@keyframes brilho {
+    0%, 100% {
+        text-shadow: 0 0 0 rgba(255, 0, 0, 0);
+    }
+    50% {
+        text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        color: #ff3333;
+    }
+}
+
+/* Efeito de pulso suave no contador */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+.contador-numero {
+    animation: pulse 3s infinite ease-in-out;
+}
+
+/* Para alinhamento preciso dos textos */
+.bloco-texto {
+    display: block;
+}
+
+/* Responsivo - mantendo a fidelidade */
+@media (max-width: 768px) {
+    .container-exato {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+    
+    .coluna-esquerda,
+    .coluna-direita {
+        text-align: center;
+        padding-top: 0;
+    }
+    
+    .coluna-central {
+        order: 0;
+        margin: 20px 0;
+        min-width: 280px;
+    }
+    
+    .data-caixa {
+        margin: 20px 0;
+    }
+    
+    .nomes-casal {
+        font-size: 44px;
+    }
+    
+    .we-love {
+        font-size: 40px;
+    }
+    
+    .contador-numero {
+        font-size: 2.5rem;
+    }
+}
+
+/* Para telas muito pequenas */
+@media (max-width: 480px) {
+    .texto-imagem {
+        font-size: 16px;
+    }
+    
+    .texto-negrito {
+        font-size: 17px;
+    }
+    
+    .data-caixa {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+    
+    .nomes-casal {
+        font-size: 38px;
+    }
+    
+    .we-love {
+        font-size: 34px;
+    }
+    
+    .contador-numero {
+        font-size: 2.2rem;
+    }
+    
+    .imagem-fundo img {
+        opacity: 0.3;
+    }
+}

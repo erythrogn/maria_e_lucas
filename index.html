@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucas & Maria</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Imagem de fundo -->
+    <div class="imagem-fundo">
+        <img src="fundo.png" alt="Fundo decorativo" onerror="this.style.display='none'">
+    </div>
+    
+    <!-- Overlay para melhorar legibilidade -->
+    <div class="overlay-fundo"></div>
+    
+    <div class="container-exato">
+        <!-- Coluna esquerda (exatamente como na imagem) -->
+        <div class="coluna-esquerda">
+            <div class="texto-imagem espacamento-duplo">
+                <span class="texto-animado">Que o amor continue sendo</span><br>
+                <span class="texto-negrito texto-animado">o melhor presente da vida.</span>
+            </div>
+            
+            <div class="texto-imagem texto-animado">
+                Dois corações, uma história.
+            </div>
+        </div>
+        
+        <!-- Coluna central com elementos adicionais -->
+        <div class="coluna-central">
+            <div class="nomes-casal texto-animado">Lucas & Maria</div>
+            
+            <div class="contador-wrapper">
+                <div class="data-caixa">
+                    <div class="contador-dias">
+                        <span class="contador-numero texto-animado" id="dias">0</span>
+                        <span class="contador-texto texto-animado">DIAS</span>
+                    </div>
+                    <div class="contador-tempo texto-animado" id="horas-minutos">
+                        00:00:00
+                    </div>
+                </div>
+                <div class="contador-legenda texto-animado">
+                    Desde 01/09/2025
+                </div>
+            </div>
+            
+            <div class="we-love texto-animado">We Love</div>
+        </div>
+        
+        <!-- Coluna direita (exatamente como na imagem) -->
+        <div class="coluna-direita">
+            <div class="texto-imagem">
+                <span class="texto-animado">Um dia para lembrar o</span><br>
+                <span class="texto-negrito texto-animado">quanto amar vale a pena.</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração da data de início
+        const dataInicio = new Date('2025-09-01T00:00:00');
+        
+        function atualizarContador() {
+            const agora = new Date();
+            const diferenca = agora - dataInicio;
+            
+            // Calcula dias completos
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            
+            // Calcula horas, minutos e segundos restantes
+            const horasTotais = diferenca / (1000 * 60 * 60);
+            const horas = Math.floor(horasTotais % 24);
+            const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+            const segundos = Math.floor((diferenca / 1000) % 60);
+            
+            // Atualiza os elementos
+            document.getElementById('dias').textContent = dias;
+            document.getElementById('horas-minutos').textContent = 
+                `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+            
+            // Adiciona animação
+            const numeroDias = document.getElementById('dias');
+            numeroDias.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                numeroDias.style.transform = 'scale(1)';
+            }, 300);
+        }
+        
+        // Inicializa o contador
+        atualizarContador();
+        
+        // Atualiza a cada segundo
+        setInterval(atualizarContador, 1000);
+        
+        // Anima a entrada dos números
+        window.addEventListener('load', () => {
+            const numeroDias = document.getElementById('dias');
+            let contador = 0;
+            const diasFinais = Math.floor((new Date() - dataInicio) / (1000 * 60 * 60 * 24));
+            
+            const animarContador = () => {
+                if (contador <= diasFinais) {
+                    numeroDias.textContent = contador;
+                    contador++;
+                    setTimeout(animarContador, 50);
+                }
+            };
+            
+            // Inicia a animação após um breve delay
+            setTimeout(animarContador, 500);
+            
+            // Adiciona efeito de digitação ao texto
+            const textosAnimados = document.querySelectorAll('.texto-animado');
+            textosAnimados.forEach((texto, index) => {
+                texto.style.opacity = '0';
+                texto.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    texto.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    texto.style.opacity = '1';
+                    texto.style.transform = 'translateY(0)';
+                }, 300 + (index * 100));
+            });
+        });
+        
+        // Adiciona efeito de brilho aleatório nos textos
+        function efeitoBrilho() {
+            const textos = document.querySelectorAll('.texto-animado');
+            const textoAleatorio = textos[Math.floor(Math.random() * textos.length)];
+            
+            textoAleatorio.classList.add('brilho-ativo');
+            setTimeout(() => {
+                textoAleatorio.classList.remove('brilho-ativo');
+            }, 1500);
+        }
+        
+        // Ativa brilho aleatório a cada 3-8 segundos
+        setInterval(efeitoBrilho, 3000 + Math.random() * 5000);
+    </script>
+</body>
+</html>
