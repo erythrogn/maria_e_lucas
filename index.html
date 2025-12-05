@@ -12,7 +12,7 @@
 <body>
     <!-- Imagem de fundo -->
     <div class="imagem-fundo">
-        <img src="fundo.png" alt="Fundo decorativo" onerror="this.style.display='none'">
+        <img src="public/fundo.png" alt="Fundo decorativo">
     </div>
     
     <!-- Overlay para melhorar legibilidade -->
@@ -38,11 +38,11 @@
             <div class="contador-wrapper">
                 <div class="data-caixa">
                     <div class="contador-dias">
-                        <span class="contador-numero texto-animado" id="dias">0</span>
+                        <span class="contador-numero texto-animado" id="dias">95</span>
                         <span class="contador-texto texto-animado">DIAS</span>
                     </div>
                     <div class="contador-tempo texto-animado" id="horas-minutos">
-                        00:00:00
+                        10:02:14
                     </div>
                 </div>
                 <div class="contador-legenda texto-animado">
@@ -62,27 +62,26 @@
         </div>
     </div>
 
-    <!-- Mini Player de Música (estilo Spotify) -->
+    <!-- Mini Player de Música -->
     <div class="mini-player" id="mini-player">
         <div class="player-info">
-            <div class="song-title">Um pouco</div>
-            <div class="song-artist">Baco Exu do Blues</div>
+            <div class="song-title">Um Pouco</div>
+            <div class="song-artist">Música Especial</div>
         </div>
         <div class="player-controls">
-            <button class="player-btn" id="btn-play">
+            <button class="player-btn" id="btn-play" aria-label="Tocar música">
                 <i class="fas fa-play" id="play-icon"></i>
             </button>
             <div class="volume-control">
                 <i class="fas fa-volume-up volume-icon"></i>
-                <input type="range" id="volume-slider" min="0" max="100" value="50">
+                <input type="range" id="volume-slider" min="0" max="100" value="50" aria-label="Volume">
             </div>
         </div>
     </div>
 
-    <!-- Áudio para tocar a música -->
+    <!-- Áudio para tocar a música local -->
     <audio id="background-music" loop>
-        <!-- Substitua pelo link da sua música -->
-        <source src="https://www.youtube.com/watch?v=xqvg1rJs3j4" type="audio/mpeg">
+        <source src="public/um_pouco.mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
@@ -98,22 +97,16 @@
             const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
             
             // Calcula horas, minutos e segundos restantes
-            const horasTotais = diferenca / (1000 * 60 * 60);
-            const horas = Math.floor(horasTotais % 24);
+            const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
             const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
             const segundos = Math.floor((diferenca / 1000) % 60);
             
-            // Atualiza os elementos
-            document.getElementById('dias').textContent = dias;
-            document.getElementById('horas-minutos').textContent = 
-                `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-            
-            // Adiciona animação
-            const numeroDias = document.getElementById('dias');
-            numeroDias.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                numeroDias.style.transform = 'scale(1)';
-            }, 300);
+            // Atualiza os elementos (mantendo os valores da imagem por padrão)
+            if(dias > 0) {
+                document.getElementById('dias').textContent = dias;
+                document.getElementById('horas-minutos').textContent = 
+                    `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+            }
         }
         
         // Inicializa o contador
@@ -122,23 +115,8 @@
         // Atualiza a cada segundo
         setInterval(atualizarContador, 1000);
         
-        // Anima a entrada dos números
+        // Anima a entrada dos textos
         window.addEventListener('load', () => {
-            const numeroDias = document.getElementById('dias');
-            let contador = 0;
-            const diasFinais = Math.floor((new Date() - dataInicio) / (1000 * 60 * 60 * 24));
-            
-            const animarContador = () => {
-                if (contador <= diasFinais) {
-                    numeroDias.textContent = contador;
-                    contador++;
-                    setTimeout(animarContador, 50);
-                }
-            };
-            
-            // Inicia a animação após um breve delay
-            setTimeout(animarContador, 500);
-            
             // Adiciona efeito de digitação ao texto
             const textosAnimados = document.querySelectorAll('.texto-animado');
             textosAnimados.forEach((texto, index) => {
@@ -151,11 +129,6 @@
                     texto.style.transform = 'translateY(0)';
                 }, 300 + (index * 100));
             });
-            
-            // Tocar música automaticamente após 2 segundos
-            setTimeout(() => {
-                togglePlay();
-            }, 2000);
         });
         
         // Adiciona efeito de brilho aleatório nos textos
@@ -187,14 +160,12 @@
                 audioPlayer.pause();
                 playIcon.classList.remove('fa-pause');
                 playIcon.classList.add('fa-play');
-                miniPlayer.classList.remove('playing');
             } else {
                 audioPlayer.play().catch(e => {
-                    console.log("Reprodução automática bloqueada. Clique no botão para tocar.");
+                    console.log("Clique novamente para tocar a música");
                 });
                 playIcon.classList.remove('fa-play');
                 playIcon.classList.add('fa-pause');
-                miniPlayer.classList.add('playing');
             }
             isPlaying = !isPlaying;
         }
@@ -225,40 +196,21 @@
         let offsetX, offsetY;
         
         miniPlayer.addEventListener('mousedown', startDrag);
-        miniPlayer.addEventListener('touchstart', startDrag);
         
         function startDrag(e) {
             isDragging = true;
             const rect = miniPlayer.getBoundingClientRect();
-            
-            if (e.type === 'mousedown') {
-                offsetX = e.clientX - rect.left;
-                offsetY = e.clientY - rect.top;
-                document.addEventListener('mousemove', onDrag);
-                document.addEventListener('mouseup', stopDrag);
-            } else {
-                const touch = e.touches[0];
-                offsetX = touch.clientX - rect.left;
-                offsetY = touch.clientY - rect.top;
-                document.addEventListener('touchmove', onDrag);
-                document.addEventListener('touchend', stopDrag);
-            }
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
         }
         
         function onDrag(e) {
             if (!isDragging) return;
             
-            let clientX, clientY;
-            if (e.type === 'mousemove') {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            } else {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            }
-            
-            const x = clientX - offsetX;
-            const y = clientY - offsetY;
+            const x = e.clientX - offsetX;
+            const y = e.clientY - offsetY;
             
             // Limitar movimento dentro da janela
             const maxX = window.innerWidth - miniPlayer.offsetWidth;
@@ -272,15 +224,7 @@
             isDragging = false;
             document.removeEventListener('mousemove', onDrag);
             document.removeEventListener('mouseup', stopDrag);
-            document.removeEventListener('touchmove', onDrag);
-            document.removeEventListener('touchend', stopDrag);
         }
-        
-        // Ajustar posição inicial
-        window.addEventListener('load', () => {
-            miniPlayer.style.left = '20px';
-            miniPlayer.style.top = '20px';
-        });
     </script>
 </body>
 </html>
