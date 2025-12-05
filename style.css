@@ -260,6 +260,135 @@ body {
     display: block;
 }
 
+/* MINI PLAYER DE MÚSICA (estilo Spotify) */
+.mini-player {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: move;
+    user-select: none;
+    min-width: 280px;
+}
+
+.mini-player:hover {
+    background: rgba(0, 0, 0, 0.92);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.mini-player.playing {
+    background: rgba(30, 30, 30, 0.9);
+    border-color: rgba(255, 0, 0, 0.3);
+}
+
+.player-info {
+    flex: 1;
+    min-width: 120px;
+}
+
+.song-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-artist {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.player-btn {
+    background: #000000; /* Verde Spotify */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    font-size: 16px;
+}
+
+.player-btn:hover {
+    background: #1ed760; /* Verde Spotify mais claro */
+    transform: scale(1.1);
+}
+
+.player-btn:active {
+    transform: scale(0.95);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.volume-icon {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.volume-control:hover .volume-icon {
+    color: #ffffff;
+}
+
+#volume-slider {
+    width: 80px;
+    height: 4px;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    border: none;
+}
+
 /* Responsivo - mantendo a fidelidade */
 @media (max-width: 768px) {
     .container-exato {
@@ -297,6 +426,20 @@ body {
     .contador-numero {
         font-size: 2.5rem;
     }
+    
+    /* Ajuste do mini player para mobile */
+    .mini-player {
+        min-width: 250px;
+        padding: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        top: auto;
+        bottom: 20px;
+    }
+    
+    .mini-player:hover {
+        transform: translateX(-50%) translateY(-2px);
+    }
 }
 
 /* Para telas muito pequenas */
@@ -329,4 +472,51 @@ body {
     .imagem-fundo img {
         opacity: 0.3;
     }
+    
+    /* Ajuste do mini player para telas muito pequenas */
+    .mini-player {
+        min-width: 220px;
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .player-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    #volume-slider {
+        width: 60px;
+    }
+}
+
+/* CORREÇÕES ADICIONAIS */
+
+/* Garantir que todos os elementos animados tenham a transição */
+.texto-animado {
+    transition: all 0.3s ease;
+    opacity: 1; /* Garantir que não fique invisível */
+}
+
+/* Melhorar a visibilidade do overlay */
+.overlay-fundo {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.25) 100%);
+}
+
+/* Ajuste no container para melhor centralização */
+.container-exato {
+    align-items: center; /* Alinhar verticalmente ao centro */
+}
+
+/* Ajuste nas colunas laterais para melhor alinhamento */
+.coluna-esquerda, .coluna-direita {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Melhorar a visibilidade do contador em diferentes fundos */
+.data-caixa {
+    background-color: rgba(0, 0, 0, 0.85); /* Um pouco mais claro para contraste */
 }
